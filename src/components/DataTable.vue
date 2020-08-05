@@ -1,13 +1,12 @@
 <template>
   <v-card>
-    <v-card-title>
-      Country List
+    <v-card-title class="d-flex justify-space-between">
+      <h3 class="mr-sm-16">Country List</h3>
       <v-switch
-        class="ml-16 pl-16"
+        class="ml-16 order-sm-last"
         v-model="$vuetify.theme.dark"
-        :label="`${$vuetify.theme.dark ? 'Night Theme' : 'Light Theme'}`"
+        :label="`${$vuetify.theme.dark ? 'Light' : 'Dark'}`"
       ></v-switch>
-      <v-spacer class="mr-16"></v-spacer>
       <v-text-field
         v-model="search"
         append-icon="mdi-magnify"
