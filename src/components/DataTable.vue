@@ -15,7 +15,17 @@
         hide-details
       ></v-text-field>
     </v-card-title>
-    <v-data-table :headers="headers" :items="countries" :search="search">
+    <v-data-table
+      show-expand
+      single-expand
+      item-key="name"
+      :headers="headers"
+      :items="countries"
+      :search="search"
+    >
+      <template v-slot:expanded-item="{item}">
+        <td :colspan="headers.length">More info about {{ item.name }}</td>
+      </template>
       <template v-slot:item.flag="{ item }">
         <div>
           <v-img
@@ -37,10 +47,10 @@
 <script>
 export default {
   name: "DataTable",
-
   data() {
     return {
       search: "",
+      isExpanded: false,
       headers: [
         {
           text: "Country Name",
