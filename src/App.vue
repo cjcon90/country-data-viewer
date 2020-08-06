@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-main>
-      <DataTable class="mx-auto my-16" style="width: 80%" />
+    <v-main :class="`${$vuetify.theme.dark ? 'grey darken-3' : 'grey lighten-2'}`">
+      <DataTable class="ma-sm-10" />
     </v-main>
   </v-app>
 </template>

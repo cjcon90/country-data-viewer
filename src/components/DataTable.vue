@@ -1,11 +1,11 @@
 <template>
   <v-card>
-    <v-card-title class="d-flex justify-space-between">
+    <v-card-title class="d-flex justify-space-around">
       <h3 class="mr-sm-16">Country List</h3>
       <v-switch
-        class="ml-16 order-sm-last"
+        class="order-sm-last ml-sm-16"
         v-model="$vuetify.theme.dark"
-        :label="`${$vuetify.theme.dark ? 'Light' : 'Dark'}`"
+        :label="`${$vuetify.theme.dark ? 'Dark Mode' : 'Light Mode'}`"
       ></v-switch>
       <v-text-field
         v-model="search"
@@ -13,6 +13,8 @@
         label="Search"
         single-line
         hide-details
+        class="flex-shrink-1"
+        style="max-width: 600px"
       ></v-text-field>
     </v-card-title>
     <v-data-table
@@ -41,10 +43,15 @@
         <div>{{parseFloat(item.population).toLocaleString("en")}}</div>
       </template>
     </v-data-table>
+    <NewsTicker class="rounded" />
   </v-card>
 </template>
 
+
+
 <script>
+import NewsTicker from "./NewsTicker";
+
 export default {
   name: "DataTable",
   data() {
@@ -70,6 +77,9 @@ export default {
       ],
       countries: [],
     };
+  },
+  components: {
+    NewsTicker,
   },
   mounted: function () {
     fetch("https://restcountries.eu/rest/v2/all", {
