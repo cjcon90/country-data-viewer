@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title class="d-flex justify-space-around">
-      <h3 class="mr-sm-16">Country List</h3>
+      <h3 class="mr-sm-16">Country Data</h3>
       <v-switch
         class="order-sm-last ml-sm-16"
         v-model="$vuetify.theme.dark"
@@ -18,15 +18,19 @@
       ></v-text-field>
     </v-card-title>
     <v-data-table
+      class="d-flex flex-column"
       show-expand
       single-expand
       item-key="name"
+      :expanded.sync="expanded"
       :headers="headers"
       :items="countries"
       :search="search"
     >
-      <template v-slot:expanded-item="{item}">
-        <td :colspan="headers.length">More info about {{ item.name }}</td>
+      <template v-slot:expanded-item>
+        <td colspan="12" style="overflow: hidden; padding: 0; max-width: 95vw">
+          <NewsTicker />
+        </td>
       </template>
       <template v-slot:item.flag="{ item }">
         <div>
@@ -43,7 +47,7 @@
         <div>{{parseFloat(item.population).toLocaleString("en")}}</div>
       </template>
     </v-data-table>
-    <NewsTicker class="rounded" />
+    <!-- <NewsTicker class="rounded ma-0 pa-0" /> -->
   </v-card>
 </template>
 
@@ -57,14 +61,15 @@ export default {
   data() {
     return {
       search: "",
+      expanded: [],
       isExpanded: false,
       headers: [
         {
-          text: "Country Name",
+          text: "Country Name (expand for News)",
           align: "start",
           filterable: true,
           value: "name",
-          width: "20%",
+          width: "18.5%",
         },
         { text: "Flag", value: "flag" },
         { text: "Region", value: "region" },

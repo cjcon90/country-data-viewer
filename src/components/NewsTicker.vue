@@ -1,24 +1,29 @@
 <template>
   <div>
     <v-sheet class="mx-auto" elevation="8">
-      <v-slide-group
-        v-model="model"
-        class="pa-4"
-        :prev-icon="prevIcon ? 'mdi-minus' : undefined"
-        :next-icon="nextIcon ? 'mdi-plus' : undefined"
-        :multiple="multiple"
-        :mandatory="mandatory"
-        :show-arrows="showArrows"
-        :center-active="centerActive"
-      >
-        <v-slide-item v-for="n in 15" :key="n" v-slot:default="{ active, toggle }">
-          <v-card color="grey lighten-4" class="ma-4" height="200" width="400" @click="toggle">
-            <v-row class="fill-height" align="center" justify="center">
-              <v-scale-transition>
-                <v-icon v-if="active" color="white" size="48" v-text="'mdi-close-circle-outline'"></v-icon>
-              </v-scale-transition>
-            </v-row>
-          </v-card>
+      <v-slide-group v-model="model" show-arrows center-active>
+        <v-slide-item v-for="story in news" :key="story">
+          <a :href="story.url" target="_blank" style="text-decoration: none;">
+            <v-card
+              color="grey lighten-4"
+              class="ma-4"
+              height="200"
+              width="275"
+              :style="{ backgroundImage: 'url(' + story.urlToImage + ')' }"
+              style="background-size: cover; max-width: 64vw"
+            >
+              <h3
+                style="width: 100%"
+                :class="`${$vuetify.theme.dark ? 'grey darken-4' : 'grey lighten-5'}`"
+              >{{story.title}}</h3>
+              <h4
+                style="position: absolute; bottom: 0; width: 100%"
+                :class="`${$vuetify.theme.dark ? 'grey darken-4' : 'grey lighten-5'}`"
+              >{{story.author}}</h4>
+
+              <v-row class="fill-height" align="center" justify="center"></v-row>
+            </v-card>
+          </a>
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
@@ -36,7 +41,7 @@ export default {
     prevIcon: false,
     nextIcon: false,
     centerActive: false,
-    country: "American Samoa",
+    country: "Lebanon",
     news: [],
   }),
   mounted() {
@@ -47,7 +52,7 @@ export default {
       }
     )
       .then((res) => res.json())
-      .then((data) => console.log(data.articles));
+      .then((data) => (this.news = data.articles));
   },
 };
 </script>
