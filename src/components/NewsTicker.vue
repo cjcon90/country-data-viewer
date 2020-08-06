@@ -2,7 +2,7 @@
   <div>
     <v-sheet class="mx-auto" elevation="8">
       <v-slide-group v-model="model" show-arrows center-active>
-        <v-slide-item v-for="story in news" :key="story">
+        <v-slide-item v-for="(story, i) in news" :key="`${i}-${story.id}`">
           <a :href="story.url" target="_blank" style="text-decoration: none;">
             <v-card
               color="grey lighten-4"
@@ -46,7 +46,7 @@ export default {
   }),
   mounted() {
     fetch(
-      `http://newsapi.org/v2/everything?q=${this.country}&apiKey=6086863167d54723950f6ab17b77332a`,
+      `https://newsapi.org/v2/everything?q=${this.country}&apiKey=6086863167d54723950f6ab17b77332a`,
       {
         method: "get",
       }
