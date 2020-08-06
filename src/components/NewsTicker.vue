@@ -46,7 +46,7 @@ export default {
   }),
   mounted() {
     fetch(
-      `https://newsapi.org/v2/everything?q=${this.country}&apiKey=6086863167d54723950f6ab17b77332a`,
+      `http://newsapi.org/v2/everything?q=${this.country}&apiKey=6086863167d54723950f6ab17b77332a`,
       {
         method: "get",
       }
