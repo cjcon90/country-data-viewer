@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-sheet class="mx-auto" elevation="8">
-      <v-slide-group v-model="model" show-arrows center-active>
+      <v-slide-group v-if="news.length" v-model="model" show-arrows center-active>
         <v-slide-item v-for="(story, i) in news" :key="`${i}-${story.id}`">
           <a :href="story.url" target="_blank" style="text-decoration: none;">
             <v-card
@@ -9,7 +9,7 @@
               class="ma-4"
               height="200"
               width="275"
-              :style="{ backgroundImage: 'url(' + story.urlToImage + ')' }"
+              :style="{ backgroundImage: 'url(' + story.image + ')' }"
               style="background-size: cover; max-width: 64vw"
             >
               <h3
@@ -27,6 +27,7 @@
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
+    <h3 v-if="!news.length" class="pl-4 grey--text">{{news[0]}}</h3>
   </div>
 </template>
 
@@ -41,18 +42,21 @@ export default {
     prevIcon: false,
     nextIcon: false,
     centerActive: false,
-    country: "Lebanon",
+    country: "France",
     news: [],
   }),
   mounted() {
     fetch(
-      `https://newsapi.org/v2/everything?q=${this.country}&apiKey=6086863167d54723950f6ab17b77332a`,
+      `https://api.currentsapi.services/v1/search?keywords=${this.country}&language=en&apiKey=4rwSA676bQuqa1WsSaX3za6e1G2V0LznLW_A9AR5MnU8D0oI`,
       {
         method: "get",
       }
     )
       .then((res) => res.json())
-      .then((data) => (this.news = data.articles));
+      .then((data) => (this.news = data.news))
+      .catch((error) => {
+        console.log("Error" + error);
+      });
   },
 };
 </script>
