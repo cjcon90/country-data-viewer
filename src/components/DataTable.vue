@@ -19,19 +19,11 @@
     </v-card-title>
     <v-data-table
       class="d-flex flex-column"
-      show-expand
-      single-expand
       item-key="name"
-      :expanded.sync="expanded"
       :headers="headers"
       :items="countries"
       :search="search"
     >
-      <template v-slot:expanded-item>
-        <td colspan="12" style="overflow: hidden; padding: 0; max-width: 95vw">
-          <NewsTicker />
-        </td>
-      </template>
       <template v-slot:item.flag="{ item }">
         <div>
           <v-img
@@ -47,22 +39,17 @@
         <div>{{parseFloat(item.population).toLocaleString("en")}}</div>
       </template>
     </v-data-table>
-    <!-- <NewsTicker class="rounded ma-0 pa-0" /> -->
   </v-card>
 </template>
 
 
 
 <script>
-import NewsTicker from "./NewsTicker";
-
 export default {
   name: "DataTable",
   data() {
     return {
       search: "",
-      expanded: [],
-      isExpanded: false,
       headers: [
         {
           text: "Country Name (expand for News)",
@@ -82,9 +69,6 @@ export default {
       ],
       countries: [],
     };
-  },
-  components: {
-    NewsTicker,
   },
   mounted: function () {
     fetch("https://restcountries.eu/rest/v2/all", {
