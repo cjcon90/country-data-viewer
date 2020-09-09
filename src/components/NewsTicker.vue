@@ -27,7 +27,7 @@
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
-    <h3 v-if="!news.length" class="pl-4 grey--text">{{news[0]}}</h3>
+    <h3 v-if="!news.length" class="pl-4 grey--text">Searching for news...</h3>
   </div>
 </template>
 
@@ -42,21 +42,37 @@ export default {
     prevIcon: false,
     nextIcon: false,
     centerActive: false,
-    country: "France",
     news: [],
   }),
-  mounted() {
-    fetch(
-      `https://api.currentsapi.services/v1/search?keywords=${this.country}&language=en&apiKey=4rwSA676bQuqa1WsSaX3za6e1G2V0LznLW_A9AR5MnU8D0oI`,
-      {
-        method: "get",
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => (this.news = data.news))
-      .catch((error) => {
-        console.log("Error" + error);
-      });
+  computed: {
+    country() {
+      return this.expandedCountry;
+    },
+  },
+  props: {
+    expandedCountry: String,
+  },
+  watch: {
+    country() {
+      this.getNews();
+    },
+  },
+  methods: {
+    getNews() {
+      this.news = [];
+      console.log(this.country);
+      fetch(
+        `https://api.currentsapi.services/v1/search?keywords=${this.country}&language=en&apiKey=4rwSA676bQuqa1WsSaX3za6e1G2V0LznLW_A9AR5MnU8D0oI`,
+        {
+          method: "get",
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => (this.news = data.news))
+        .catch((error) => {
+          console.log("Error" + error);
+        });
+    },
   },
 };
 </script>
