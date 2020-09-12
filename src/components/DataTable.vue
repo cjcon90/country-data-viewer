@@ -52,7 +52,7 @@ export default {
       search: "",
       headers: [
         {
-          text: "Country Name (expand for News)",
+          text: "Country Name",
           align: "start",
           filterable: true,
           value: "name",
